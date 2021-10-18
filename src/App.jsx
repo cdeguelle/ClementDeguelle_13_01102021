@@ -6,8 +6,12 @@ import Home from './pages/Home'
 import LogIn from './pages/LogIn'
 import Profile from './pages/Profile'
 import GlobalStyle from './utils/style/GlobalStyle'
+import { useSelector } from 'react-redux'
+import { selectUser } from './utils/selectors'
 
 const App = () => {  
+    const { isLoggedIn } = useSelector(selectUser)
+
     return (
         <Router>
             <GlobalStyle />
@@ -20,7 +24,7 @@ const App = () => {
                     <LogIn />
                 </Route>
                 <Route path="/profile">
-                    <Profile />
+                    {isLoggedIn ? <Profile /> : <LogIn />}
                 </Route>
             </Switch>
             <Footer />
