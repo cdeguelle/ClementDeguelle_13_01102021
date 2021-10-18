@@ -2,7 +2,9 @@ import { Link } from 'react-router-dom'
 import { StyledLink, TitleHidden } from '../../utils/style/Atoms'
 import styled from 'styled-components'
 import ArgentBankLogo from '../../assets/argentBankLogo.png'
-import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectUser } from '../../utils/selectors'
+import * as userActions from '../../features/user'
 
 const HomeLogo = styled.img`
     max-width: 100%;
@@ -21,7 +23,8 @@ const NavContainer = styled.nav`
 `
 
 function Header() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const { isLoggedIn } = useSelector(selectUser)
+    const dispatch = useDispatch()
 
     return (
         <NavContainer>
@@ -38,11 +41,11 @@ function Header() {
                 ) : (
                     <div style={{ display: 'flex' }}>
                         <StyledLink to='/user' style={{ marginRight: '20px' }}>
-                            <i class="fa fa-user-circle" style={{ marginRight: '5px' }}></i>
+                            <i className="fa fa-user-circle" style={{ marginRight: '5px' }}></i>
                             Tony
                         </StyledLink>
-                        <StyledLink to="/" onClick={setIsLoggedIn(false)}>
-                            <i class="fa fa-sign-out" style={{ marginRight: '5px' }}></i>
+                        <StyledLink to="/" onClick={() => dispatch(userActions.rejected())}>
+                            <i className="fa fa-sign-out" style={{ marginRight: '5px' }}></i>
                             Sign Out
                         </StyledLink>
                     </div>

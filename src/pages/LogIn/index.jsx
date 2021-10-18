@@ -63,27 +63,24 @@ function LogIn() {
     return (
         <LogInWrapper>
             <SignInContent>
-                <i class="fa fa-user-circle"></i>
+                <i className="fa fa-user-circle"></i>
                 <h1>Sign In</h1>
-                <form onSubmit={
-                    event => {
-                        event.preventDefault()
-                        fetchUserLogin(dispatch, username, password)
-                    }
-                }>
+                <form>
                     <InputWrapper>
-                        <label for="username">Username</label>
+                        <label htmlFor="username">Username</label>
                         <input type="text" id="username" onChange={event => setUsername(event.target.value)} />
                     </InputWrapper>
                     <InputWrapper>
-                        <label for="password">Password</label>
+                        <label htmlFor="password">Password</label>
                         <input type="password" id="password" onChange={event => setPassword(event.target.value)} />
                     </InputWrapper>
                     <InputRemember>
                         <input type="checkbox" id="remember-me" />
-                        <label for="remember-me">Remember me</label>
+                        <label htmlFor="remember-me">Remember me</label>
                     </InputRemember>
-                    <SignInButton type='submit' to='/profile'>Sign In</SignInButton>
+                    <SignInButton to='/profile' onClick={() => {fetchUserLogin(dispatch, username, password)}}>
+                        Sign In
+                    </SignInButton>
                 </form>
             </SignInContent>
         </LogInWrapper>

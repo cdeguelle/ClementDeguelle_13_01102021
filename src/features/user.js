@@ -1,25 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit'
+import axios from 'axios'
 
 const initialState = {
     firstName: '',
     lastName: '',
-    isLoggedIn: false, 
+    isLoggedIn: false,
     email: '',
-    password: ''
+    password: '',
+    token: ''
 }
 
 export async function fetchUserLogin(dispatch, email, password) {
-    try {
-        const response = await fetch('http://localhost:3001/api/v1/user/login', {
-            method: 'POST',
-            body: {email: email, password: password}
+    axios
+        .post('http://localhost:3001/api/v1/user/login', {
+            email: email,
+            password: password,
         })
-        if (response.status === 200) {
-            dispatch(actions.resolved())
-        }
-    } catch (error) {
-        dispatch(actions.rejected(error))
-    }
+        .then(response => dispatch(actions.resolved(response.data.token)))
+        .catch(error => dispatch(actions.rejected(error)))
 }
 
 const { actions, reducer } = createSlice({
@@ -28,15 +26,17 @@ const { actions, reducer } = createSlice({
     reducers: {
         resolved: (draft, action) => {
             draft.isLoggedIn = true
+            draft.token = action.payload
             return
         },
-        rejected: (draft, action) => {
+        rejected: (draft) => {
             draft.isLoggedIn = false
+            draft.token = ''
             return
-        }
-    }
+        },
+    },
 })
 
-export const { fetching, rejected, resolved } = actions
+export const { rejected, resolved } = actions
 
 export default reducer
