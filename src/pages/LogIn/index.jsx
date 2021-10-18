@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
+import { fetchUserLogin } from '../../features/user'
+import { useDispatch } from 'react-redux'
 
 const LogInWrapper = styled.main`
     flex: 1;
@@ -56,13 +58,19 @@ const SignInButton = styled(Link) `
 function LogIn() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const dispatch = useDispatch()
 
     return (
         <LogInWrapper>
             <SignInContent>
                 <i class="fa fa-user-circle"></i>
                 <h1>Sign In</h1>
-                <form>
+                <form onSubmit={
+                    event => {
+                        event.preventDefault()
+                        fetchUserLogin(dispatch, username, password)
+                    }
+                }>
                     <InputWrapper>
                         <label for="username">Username</label>
                         <input type="text" id="username" onChange={event => setUsername(event.target.value)} />
@@ -75,7 +83,7 @@ function LogIn() {
                         <input type="checkbox" id="remember-me" />
                         <label for="remember-me">Remember me</label>
                     </InputRemember>
-                    <SignInButton to='/profile'>Sign In</SignInButton>
+                    <SignInButton type='submit' to='/profile'>Sign In</SignInButton>
                 </form>
             </SignInContent>
         </LogInWrapper>
