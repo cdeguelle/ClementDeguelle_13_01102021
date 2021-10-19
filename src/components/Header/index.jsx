@@ -33,7 +33,7 @@ function Header() {
                 <TitleHidden>Argent Bank</TitleHidden>
             </Link>
             <div>
-                {isLoggedIn === false ? (
+                {!isLoggedIn ? (
                     <StyledLink to="/sign-in">
                         <i className="fa fa-user-circle" style={{ marginRight: '10px' }}></i>
                         Sign In
