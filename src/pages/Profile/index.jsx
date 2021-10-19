@@ -1,5 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
+import { fetchUserProfile } from '../../features/user'
+import { selectUser } from '../../utils/selectors'
 import { TitleHidden } from '../../utils/style/Atoms'
 
 const UserWrapper = styled.main`
@@ -110,9 +114,13 @@ const NameButton = styled.button`
 `
     
 function Profile() {
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
+    const user = useSelector(selectUser)
     const [isEditing, setIsEditing] = useState(false)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetchUserProfile)
+    }, [dispatch])
 
     return (
         <UserWrapper>
@@ -121,8 +129,8 @@ function Profile() {
                     <NameEditing>
                         <h1>Welcome back</h1>
                         <EditNameForm>
-                            <NameInput type="text" id="firstname" placeholder={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                            <NameInput type="text" id="lastname" placeholder={lastName} onChange={(e) => setLastName(e.target.value)}/>
+                            <NameInput type="text" id="firstname" placeholder={user.firstName} />
+                            <NameInput type="text" id="lastname" placeholder={user.lastName} />
                         </EditNameForm>
                         <EditNameButtons>
                             <NameButton onClick={() => setIsEditing(false)}>Save</NameButton>
@@ -131,7 +139,7 @@ function Profile() {
                     </NameEditing>
                 ) : (
                     <div>
-                        <h1>Welcome back<br />{firstName} {lastName}!</h1>
+                        <h1>Welcome back<br />{user.firstName} {user.lastName}!</h1>
                         <EditButton onClick={() => setIsEditing(true)}>Edit Name</EditButton>
                     </div>
                 )}
