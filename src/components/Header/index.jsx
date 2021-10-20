@@ -24,6 +24,7 @@ const NavContainer = styled.nav`
 
 function Header() {
     const { isLoggedIn } = useSelector(selectUser)
+    const { firstName } = useSelector(selectUser)
     const dispatch = useDispatch()
 
     return (
@@ -42,7 +43,7 @@ function Header() {
                     <div style={{ display: 'flex' }}>
                         <StyledLink to='/user' style={{ marginRight: '20px' }}>
                             <i className="fa fa-user-circle" style={{ marginRight: '5px' }}></i>
-                            Tony
+                            {firstName}
                         </StyledLink>
                         <StyledLink to="/" onClick={() => dispatch(userActions.rejected())}>
                             <i className="fa fa-sign-out" style={{ marginRight: '5px' }}></i>
