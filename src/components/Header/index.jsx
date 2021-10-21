@@ -41,7 +41,7 @@ function Header() {
                     </StyledLink>
                 ) : (
                     <div style={{ display: 'flex' }}>
-                        <StyledLink to='/user' style={{ marginRight: '20px' }}>
+                        <StyledLink to='/profile' style={{ marginRight: '20px' }}>
                             <i className="fa fa-user-circle" style={{ marginRight: '5px' }}></i>
                             {firstName}
                         </StyledLink>

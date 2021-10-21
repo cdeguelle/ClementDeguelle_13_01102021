@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import { fetchUserProfile } from '../../features/user'
 import { selectUser } from '../../utils/selectors'
 import { TitleHidden } from '../../utils/style/Atoms'
+import { fetchUpdateProfile } from '../../features/user'
+import * as userActions from '../../features/user'
 
 const UserWrapper = styled.main`
     flex: 1;
@@ -117,10 +119,25 @@ function Profile() {
     const user = useSelector(selectUser)
     const [isEditing, setIsEditing] = useState(false)
     const dispatch = useDispatch()
+    const [firstName, setFirstName] = useState(user.firstName)
+    const [lastName, setLastName] = useState(user.lastName)
 
     useEffect(() => {
         dispatch(fetchUserProfile)
     }, [dispatch])
+
+    const saveButtonFunctions = () => {
+        setIsEditing(false)
+        dispatch(userActions.updateFirstName(firstName))
+        dispatch(userActions.updateLastName(lastName))
+        dispatch(fetchUpdateProfile)
+    }
+
+    const cancelButtonFunctions = () => {
+        setIsEditing(false)
+        setFirstName(user.firstName)
+        setLastName(user.lastName)
+    }
 
     return (
         <UserWrapper>
@@ -129,12 +146,12 @@ function Profile() {
                     <NameEditing>
                         <h1>Welcome back</h1>
                         <EditNameForm>
-                            <NameInput type="text" id="firstname" placeholder={user.firstName} />
-                            <NameInput type="text" id="lastname" placeholder={user.lastName} />
+                            <NameInput type="text" id="firstname" placeholder={user.firstName} onChange={(e) => setFirstName(e.target.value)} />
+                            <NameInput type="text" id="lastname" placeholder={user.lastName} onChange={(e) => setLastName(e.target.value)} />
                         </EditNameForm>
                         <EditNameButtons>
-                            <NameButton onClick={() => setIsEditing(false)}>Save</NameButton>
-                            <NameButton onClick={() => setIsEditing(false)}>Cancel</NameButton>
+                            <NameButton onClick={() => saveButtonFunctions()}>Save</NameButton>
+                            <NameButton onClick={() => cancelButtonFunctions()}>Cancel</NameButton>
                         </EditNameButtons>
                     </NameEditing>
                 ) : (
