@@ -28,6 +28,20 @@ export async function fetchUserProfile(dispatch, getState) {
         .catch(error => console.log(error))
 }
 
+export async function fetchUpdateProfile(dispatch, getState) {
+    const token = selectUser(getState()).token
+    const firstName = selectUser(getState()).firstName
+    const lastName = selectUser(getState()).lastName
+    const headers = { 'Authorization': `Bearer ${token}` }
+    axios
+        .put('http://localhost:3001/api/v1/user/profile', {
+            firstName: firstName,
+            lastName: lastName
+        }, { headers })
+        .then(response => dispatch(actions.userProfile(response.data.body)))
+        .catch(error => console.log(error))
+}
+
 const { actions, reducer } = createSlice({
     name: 'user',
     initialState,
@@ -46,10 +60,18 @@ const { actions, reducer } = createSlice({
             draft.firstName = action.payload.firstName
             draft.lastName = action.payload.lastName
             return
+        },
+        updateFirstName: (draft, action) => {
+            draft.firstName = action.payload
+            return
+        },
+        updateLastName: (draft, action) => {
+            draft.lastName = action.payload
+            return
         }
     }
 })
 
-export const { rejected, resolved, userProfile } = actions
+export const { rejected, resolved, userProfile, updateFirstName, updateLastName } = actions
 
 export default reducer
