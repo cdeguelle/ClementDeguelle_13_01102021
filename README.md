@@ -1,3 +1,26 @@
+# Projet Argent Bank
+[![forthebadge](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com) 
+
+Projet n°13 dans le cadre de ma formation Développeur Front-End avec Openclassrooms
+
+## Fabriqué avec
+
+* [VSCode](https://code.visualstudio.com/) - Editeur de textes
+
+## Contributing
+
+Si vous souhaitez contribuer, lisez le fichier [CONTRIBUTING.md](https://example.org) pour savoir comment le faire.
+
+## Versions
+
+**Dernière version stable :** NA
+**Dernière version :** NA
+Liste des versions : [Cliquer pour afficher](https://github.com/cdeguelle/ClementDeguelle_13_01102021/commits)
+
+## Auteurs
+
+* **Clément Deguelle** _alias_ [@cdeguelle](https://github.com/cdeguelle)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
